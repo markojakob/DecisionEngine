@@ -29,14 +29,14 @@ public class DecisionService {
 
         int creditModifier = creditService.getCreditModifier(request.getPersonalCode());
 
-        if (creditModifier == -1) { // debt
+        if (creditModifier == -1) {
             response.setApproved(false);
             response.setApprovedAmount(0);
             response.setPeriod(Math.max(request.getPeriod(), minPeriod));
             return response;
         }
 
-        int period = Math.max(request.getPeriod(), minPeriod);
+        int period = request.getPeriod();
 
         while (period <= maxPeriod && approvedAmount == 0) {
             int amount = maxAmount;
@@ -54,7 +54,7 @@ public class DecisionService {
 
         response.setApproved(approvedAmount > 0);
         response.setApprovedAmount(approvedAmount);
-        response.setPeriod(approvedPeriod > 0 ? approvedPeriod : Math.max(request.getPeriod(), minPeriod));
+        response.setPeriod(approvedPeriod > 0 ? approvedPeriod : request.getPeriod());
 
         return response;
     }

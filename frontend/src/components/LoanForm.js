@@ -16,6 +16,11 @@ const handleSubmit = async (e) => {
     return;
   }
 
+  if (loanAmount < 2000 || loanAmount > 10000) {
+    alert("Loan amount must be betwen 2000€ and 10000€")
+    return;
+  }
+
   try {
     const response = await fetch("http://localhost:8080/decision", {
       method: "POST",
